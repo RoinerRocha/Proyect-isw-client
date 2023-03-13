@@ -4,7 +4,8 @@ import axios from "axios";
 import "./css/Login.css";
 
 function Logicalogin(correo,cont,navigate){ 
-    if(!correo || !cont){ 
+    let Tokuser ="";
+        if(!correo || !cont){ 
         if(!correo && cont){
             alert("Llenar campos");           
         }if(!cont && correo){
@@ -24,6 +25,8 @@ function Logicalogin(correo,cont,navigate){
         }).then(function (res) {
             console.log(res);
             if(res){
+                Tokuser=res.data.data.token;
+               sessionStorage.setItem('Token',JSON.stringify(Tokuser)); 
                navigate("/home");         
             };
           }).catch(error=>{
