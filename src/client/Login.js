@@ -15,7 +15,7 @@ function Logicalogin(correo,cont,navigate){
         } 
 
     }else{
-        axios.post('http://localhost:5000/login',{  
+        axios.post('http://localhost:5000/session',{  
             email: correo,
             password: cont      
         },{
@@ -24,15 +24,17 @@ function Logicalogin(correo,cont,navigate){
              }  
         }).then(function (res) {
             console.log(res);
-            if(res){
-                Tokuser=res.data.data.token;
-               sessionStorage.setItem('Token',JSON.stringify(Tokuser)); 
+            if(!res.data.data){
+                console.log("papitas");
+                alert("pto");
+            }
+            if(res.data.data){
+                Tokuser=res.data.data;
+               localStorage.setItem('Token',JSON.stringify(Tokuser)); 
                navigate("/home");         
             };
-          }).catch(error=>{
-            console.log("error: "+error);
-            alert("Error Datos ingresados");
-          });
+            
+          })
           
     };
     
@@ -43,14 +45,14 @@ function Login(){
     const navigate=useNavigate();
 	
     let [correo,setCorreo]=useState('');
-    let [contra,setContra]=useState('');  
+    let [cont,setContra]=useState('');  
     return(
         <div className="background">
             <div className="cover">
                 <h1>Inicio</h1>
                     <input className="email" type="text" placeholder="Email" onChange={ev=>setCorreo(ev.target.value)} required/>
                     <input className="contra" type="password" placeholder="Contraseña" onChange={ev=>setContra(ev.target.value)} required/>
-                    <div className="login-btn"  type="submit" value="Login" onClick={()=>Logicalogin(correo,contra,navigate)}>login</div>
+                    <div className="login-btn"  type="submit" value="Login" onClick={()=>Logicalogin(correo,cont,navigate)}>login</div>
                     {/*<input type="submit" value="Login" onClick={()=>Logicalogin(correo,contra,navigate)}/>*/}
                     <div className="alt-login">                        
                         <div className="">Si no estas registrado <a href="/register">Registrar</a></div>

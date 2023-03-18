@@ -4,13 +4,13 @@ import axios from "axios";
 import "./css/Register.css";
 function Register(){
     let navigate=useNavigate();
-    const Registrar = async (name, lname, email, password) => {   
-        if(!name || !lname || !email || !password){
+    const Registrar = async (fname, lname, email, password) => {   
+        if(!fname || !lname || !email || !password){
             alert("Falta algun dato por ingresar");
         }else{
             axios.post('http://localhost:5000/user',{
-            name: name,
-            lname:lname,
+            fname: fname,
+            lname: lname,
             email: email,
             password: password
             },{
@@ -30,7 +30,7 @@ function Register(){
         };
 
     };
-    let [name, setName] = useState('');
+    let [fname, setName] = useState('');
     let [lname, setLname] = useState('');
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
@@ -39,10 +39,10 @@ function Register(){
             <div className="cover1">
                 <h1>Registro</h1>
                 <input className="nombre" type="text" placeholder="Nombre" onChange={ev => setName(ev.target.value)} required />
-                <input className="correo" type="text" placeholder="Segundo nombre" onChange={ev => setLname(ev.target.value)} required />
+                <input className="correo" type="text" placeholder="Apellido" onChange={ev => setLname(ev.target.value)} required />
                 <input className="contraseña" type="email" placeholder="Email" onChange={ev => setEmail(ev.target.value)} required />
                 <input className="contraseña2" type="password" placeholder="Contraseña"  onChange={ev => setPassword(ev.target.value)} required />
-                <div className="login-btn1" type="submit" value="Registrar" onClick={() => Registrar(name, lname, email, password)}>registrar</div>
+                <div className="login-btn1" type="submit" value="Registrar" onClick={() => Registrar(fname, lname, email, password)}>registrar</div>
                 <div className="alt-login1">
                     <div className="">Si ya estas registrado <a href="/">Login</a></div>
                 </div>

@@ -2,6 +2,8 @@
 import './App.css';
 import Login from './client/Login';
 import Register from './client/Register';
+import Home from './client/home';
+import News from './client/newsSources';
 import {
   Routes,
   Route,
@@ -13,6 +15,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
+          <Route path='/home' element={<Home/>}/>
+          <Route path='/newSources' element={<News/>}/>
         </Routes>   
     </div>
   ); 

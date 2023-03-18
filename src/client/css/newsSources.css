@@ -16,16 +16,16 @@
     justify-content: center;
     align-items: center;
 }
-.backgroundNews{
-    background-image: url("https://cdn.wallpapersafari.com/70/89/k8HjRO.png");
+.background{
+    background-image: url("https://cdn.wallpapersafari.com/75/32/NhaQqJ.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     height: 100vh;
     width: 100vw;
 }
-.cover2 {
-    background-image: url("https://wallpaper.dog/large/10842632.jpg");
+.cover1 {
+    background-image: url("https://mobimg.b-cdn.net/v3/fetch/6d/6da0d069512dd63d859116c05e7f1bf0.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -69,6 +69,13 @@ input {
 
 input:focus{
     outline-color: rgb(32, 177, 255);
+}
+select{
+    border: none;
+    background-color: rgb(229, 226, 226);
+    height: 4em;
+    width: 80%;
+    text-align: center;
 }
 
 .login-btn1{
