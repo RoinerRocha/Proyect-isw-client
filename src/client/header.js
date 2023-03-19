@@ -9,9 +9,9 @@ function Header(props) {
     return (
         <header className="container">
             <div className="nav">
-				<NavLink to="/newSources" className="nav-menu-item"><a className="nav-menu-link nav-link">newsSources</a></NavLink>
+				<NavLink to="/tableNews" className="nav-menu-item"><a className="nav-menu-link nav-link">Nuevas Noticias</a></NavLink>
 				<NavLink to="/home" className="nav-menu-item"><a className="nav-menu-link nav-link">Home</a></NavLink>
-                <NavLink className="nav-menu-item"><a className="nav-menu-link nav-link" href="#">Welcome {props.nombre}</a></NavLink>
+                <NavLink to="/categorias"className="nav-menu-item"><a className="nav-menu-link nav-link" href="#">categorias</a></NavLink>
                 <NavLink to="/" className="nav-menu-item"><a onClick={() => cerrar()} className="nav-menu-link nav-link">Logout</a></NavLink>
                 <form >
 					<div className='form-group'>

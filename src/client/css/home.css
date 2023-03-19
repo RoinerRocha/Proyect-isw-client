@@ -37,3 +37,12 @@
 	height: 50px;
 	stroke: #555;
 }
+.btn-cat{
+  background-color: rgb(32, 177, 255);
+  transition: 0.5s;
+  border-radius: 0.25em;
+  cursor: pointer;
+  margin: 5px 5px;
+}
+
+.btn-cat:hover{ transform: scale(1.25);}

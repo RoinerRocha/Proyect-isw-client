@@ -26,7 +26,7 @@ function Logicalogin(correo,cont,navigate){
             console.log(res);
             if(!res.data.data){
                 console.log("papitas");
-                alert("pto");
+                alert("error");
             }
             if(res.data.data){
                 Tokuser=res.data.data;
