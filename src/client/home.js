@@ -40,8 +40,11 @@ function Home() {
                         <img src="https://pokeclubsite.files.wordpress.com/2016/07/pikachu-150x1501.png" alt="150" width="150" />
                         <p>Fifa Code: codigo3</p>
                         <p>Grupo:  grupo2</p>
+                        <p>Fifa Code: codigo3</p>
+                        <p>Grupo:  grupo2</p>
                     </div>
             </div>
+            
         </div>
     </div>
     )

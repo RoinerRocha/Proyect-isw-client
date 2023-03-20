@@ -11,7 +11,7 @@ function Header(props) {
             <div className="nav">
 				<NavLink to="/tableNews" className="nav-menu-item"><a className="nav-menu-link nav-link">Nuevas Noticias</a></NavLink>
 				<NavLink to="/home" className="nav-menu-item"><a className="nav-menu-link nav-link">Home</a></NavLink>
-                <NavLink to="/categorias"className="nav-menu-item"><a className="nav-menu-link nav-link" href="#">categorias</a></NavLink>
+                <NavLink to="/tableCategories"className="nav-menu-item"><a className="nav-menu-link nav-link" href="#">categorias</a></NavLink>
                 <NavLink to="/" className="nav-menu-item"><a onClick={() => cerrar()} className="nav-menu-link nav-link">Logout</a></NavLink>
                 <form >
 					<div className='form-group'>

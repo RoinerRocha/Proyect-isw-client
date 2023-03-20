@@ -6,6 +6,7 @@ import Home from './client/home';
 import News from './client/newsSources';
 import Categorias from './client/categorias';
 import Table from './client/tableNews';
+import TableCategories from './client/tableCategories';
 import {
   Routes,
   Route,
@@ -21,6 +22,7 @@ function App() {
           <Route path='/newSources' element={<News/>}/>
           <Route path='/categorias' element={<Categorias/>}/>
           <Route path='/tableNews' element={<Table/>}/>
+          <Route path='/tableCategories' element={<TableCategories/>}/>
         </Routes>   
     </div>
   ); 

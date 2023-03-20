@@ -6,13 +6,20 @@ import "./css/table.css";
 import Header from "./header";
 import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from "reactstrap";
 
-function table() {
+
+
+function TableNews() {
+    function LogicaNew(navigate){ 
+        navigate("/newSources");
+    
+    }
+    const navigate=useNavigate();
     return (
         <div className="tabla">
             {<Header />}
             <Container className="tablita">
                 <br />
-                <Button color="success">Insertar nueva noticia</Button>
+                <Button onClick={()=>LogicaNew(navigate)} color="success">Insertar nueva noticia</Button>
                 <br /><br />
                 <Table>
                     <thead>
@@ -35,4 +42,4 @@ function table() {
         </div>
     )
 }
-export default table;
+export default TableNews;
