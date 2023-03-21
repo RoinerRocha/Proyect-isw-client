@@ -8,10 +8,18 @@ import "./css/home.css";
 
 function Home() {
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
+    let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
     const [categorias, setCategorias] = useState(null)
     useEffect(() => {
         todasCategorias(setCategorias)
     }, [])
+
+    useEffect(() => {
+        if(!usuario){
+            window.location("/")
+        }
+    }, []);
+
 
     useEffect(() => {
         if(!usuario){

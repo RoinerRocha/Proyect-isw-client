@@ -4,7 +4,14 @@ import Header from "./header";
 import axios from "axios";
 import "./css/categorias.css";
 
+
 function RegistrarCategoria(){
+    let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
+    useEffect(() => {
+        if(!usuario){
+            window.location("/")
+        }
+    }, []);
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
     useEffect(() => {
         if(!usuario){
