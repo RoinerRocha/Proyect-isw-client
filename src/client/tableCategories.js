@@ -8,6 +8,68 @@ import Header from "./header";
 import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from "reactstrap";
 
 function TableCategories() {
+    const [editData, setEditData] = useState(null)
+    const [formData, setFormData] = useState({
+        name: '',
+    })
+    useEffect(() => {
+        if (editData !== null) {
+            setFormData(editData)
+        } else {
+            setFormData({
+                name: '',
+            })
+        }
+    }, [editData])
+    
+    const editCategory = (categorias) => {
+        console.log(categorias._id);
+        const isEdited = window.confirm(`Desea eliminar esta categoria?${categorias._id}`)
+        if (isEdited) {
+            axios.put(`http://localhost:5000/category/${categorias._id}`, {
+                _id: categorias._id,
+                name: formData.name
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(function (res) {
+                console.log(res);
+                if (res) {
+                    navigate("/home");
+                }
+            }).catch(error => {
+                console.log("error: " + error);
+                alert("NO se pudo eliminar");
+            });
+        }
+    }
+
+    const handleChange = (e) => {
+        setFormData({
+          ...formData,
+          [e.target.name]: e.target.value
+        })
+      }
+    
+
+    const handleSubmit = (e) => {
+        e.preventDefault(); // Evitar que se recarge la página
+        
+        if (formData.name !== '') {
+          if (editData !== null) {
+            editCategory(formData)
+          } else { 
+            formData._id = Date.now()
+            setFormData({
+              name: '',
+            })
+          }
+        } else {
+          alert("Por favor agrega un equipo y pais.")
+        }
+      }
+
     const [categorias, setCategorias] = useState(null)
     useEffect(() => {
         todasCategorias(setCategorias)
@@ -34,9 +96,10 @@ function TableCategories() {
             }).catch(error => {
                 console.log("error: " + error);
                 alert("NO se pudo eliminar");
-            });                 
+            });
         }
     }
+
     const navigate = useNavigate();
     return (
         <div className="tabla">
@@ -55,13 +118,19 @@ function TableCategories() {
                             <tr>
                                 <td>{cat.name}</td>
                                 <td>
-                                    <Button color="primary">editar</Button>{"  "}
+                                    <Button onClick={() => setEditData(cat)} color="primary">editar</Button>{"  "}
                                     <Button onClick={() => deleteCategory(cat._id)} color="danger">eliminar</Button>
                                 </td>
                             </tr>
-                        ))) : ('no hay cosas')}
+                        ))) : ('no hay categorias')}
                     </tbody>
                 </Table>
+                <form className='m-3'onSubmit={handleSubmit} >
+                    <label htmlFor="name">Nombre Categoria a editar:</label>
+                    <input type="text" name="name" onChange={handleChange} value={formData.name}></input>
+                    <input className='btn btn-success mx-1' type="submit" value="Enviar" />
+                    <input className='btn btn-danger mx-1' type="reset" value="Cancelar" />
+                </form>
             </Container>
         </div>
     )
