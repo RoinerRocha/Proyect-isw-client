@@ -9,6 +9,12 @@ import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, Mod
 
 
 function TableNews() {
+    let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
+    useEffect(() => {
+        if(!usuario){
+            window.location("/")
+        }
+    }, []);
     function LogicaNew(navigate){ 
         navigate("/newSources");
     
