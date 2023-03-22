@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router"
 import "./css/table.css";
+import jwtDecode from "jwt-decode";
 import { todasCategorias } from "./funcion";
 import Header from "./header";
 import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from "reactstrap";
@@ -10,8 +11,13 @@ import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, Mod
 function TableCategories() {
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
     useEffect(() => {
+        const token = jwtDecode(usuario);
+        console.log(token);
         if(!usuario){
             window.location("/")
+        }
+        if(token.role == "user"){   
+            window.location("/home")
         }
     }, []);
     const [editData, setEditData] = useState(null)

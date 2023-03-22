@@ -30,7 +30,7 @@ function TableNews() {
     const [editData, setEditData] = useState(null)
     const [formData, setFormData] = useState({
         name: '',
-        category_id: ''
+        url: ''
     })
 
     useEffect(() => {
@@ -40,7 +40,7 @@ function TableNews() {
                 'Content-Type': 'application/json'
             }
         }).then(function (res) {
-            console.log(res.data, "hola")
+            console.log(res.data)
             console.log(token)
             setSources(res.data);
 
@@ -55,7 +55,7 @@ function TableNews() {
         } else {
             setFormData({
                 name: '',
-                category_id: ''
+                url: ''
             })
         }
     }, [editData])
@@ -66,8 +66,9 @@ function TableNews() {
         if (isEdited) {
             axios.put(`http://localhost:5000/newsource/${sources._id}`, {
                 _id: sources._id,
+                url: formData.url,
                 name: formData.name,
-                category_id: formData.category_id
+                
             }, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -102,7 +103,7 @@ function TableNews() {
                 formData._id = Date.now()
                 setFormData({
                     name: '',
-                    category_id: ''
+                    url: ''
                 })
             }
         } else {
@@ -153,16 +154,20 @@ function TableNews() {
                     </thead>
                     <tbody>
                         {sources !== null ? (sources.map(sou => (
-                            categorias !== null ? (categorias.map(cat => (
-                                <tr>
-                                    <td>{sou.name}</td>
-                                    <td >{cat.name}</td>
-                                    <td>
-                                        <Button onClick={() => setEditData(sou)} color="primary">editar</Button>{"  "}
-                                        <Button onClick={() => deleteSource(sou._id)} color="danger">eliminar</Button>
-                                    </td>
-                                </tr>
-                            ))): ('no hay fuentes')
+                            categorias !== null ? (categorias.map(cat => {
+                                if (sou.category_id === cat._id) {
+                                    return (
+                                        <tr>
+                                            <td>{sou.name}</td>
+                                            <td >{cat.name}</td>
+                                            <td>
+                                                <Button onClick={() => setEditData(sou)} color="primary">editar</Button>{"  "}
+                                                <Button onClick={() => deleteSource(sou._id)} color="danger">eliminar</Button>
+                                            </td>
+                                        </tr>
+                                    )
+                                }
+                            })) : ('no hay fuentes')
                         ))) : ('no hay fuentes')}
                     </tbody>
                 </Table>
@@ -170,7 +175,7 @@ function TableNews() {
                     <label htmlFor="name">Titulo del Source a editar:</label>
                     <input type="text" name="name" onChange={handleChange} value={formData.name}></input>
                     <label htmlFor="name">Nombre Categoria a editar:</label>
-                    <input type="text" name="category_id" onChange={handleChange} value={formData.category_id}></input>
+                    <input type="text" name="url" onChange={handleChange} value={formData.url}></input>
                     <input className='btn btn-success mx-1' type="submit" value="Enviar" />
                     <input className='btn btn-danger mx-1' type="reset" value="Cancelar" />
                 </form>
