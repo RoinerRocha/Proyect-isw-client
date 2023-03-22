@@ -17,14 +17,36 @@ function Home() {
         todasCategorias(setCategorias)
     }, [])
 
-
-    const [news, setNews] = useState(null)
+    /*const [news, setNews] = useState(null)
     useEffect(() => {
         Noticias(setNews)
-    }, [])
+    }, [])*/
+
 
     useEffect(() => {
         axios.get(`http://localhost:5000/news/${token.id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + usuario,
+                'Content-Type': 'application/json'
+            }
+        }).then(function (res) {
+            setNotice(res.data);
+
+        }).catch(error => {
+            console.log("error: " + error);
+        });
+    }, []);
+
+
+    useEffect(() => {
+        if (!usuario) {
+            window.location("/")
+        }
+    }, []);
+
+    const Filtro = (props) => {
+        console.log(props);
+        axios.get(`http://localhost:5000/news/${token.id}/${props}`, {
             headers: {
                 'Authorization': 'Bearer ' + usuario,
                 'Content-Type': 'application/json'
@@ -36,51 +58,34 @@ function Home() {
         }).catch(error => {
             console.log("error: " + error);
         });
-    }, []);
+    }
 
-
-    useEffect(() => {
-        if(!usuario){
-            window.location("/")
-        }
-    }, []);
-
-    /*const navigate=useNavigate();
-    let personaDb = JSON.parse(sessionStorage.getItem('Token'));//valida si la persona esta logueada si no lo devuelve al registro
-    console.log(personaDb)
-    let nomp="null";
-    if(!personaDb){
-        navigate("/")
-        alert("No estas logueado");
-    }else{
-      nomp=personaDb.lname;
-    }*/
     return (
         <div>
-        {<Header />}
-        <div className='container-filter container'>
-            <div className='icon-filter'>
-                {categorias !== null ? (categorias.map(cat=>(
-                    <button className="btn-cat">{cat.name}</button>
-                ))) : ('no hay cosas')}
-                <span>Filtrar Categorias</span>
+            {<Header />}
+            <div className='container-filter container'>
+                <div className='icon-filter'>
+                    {categorias !== null ? (categorias.map(cat => (
+                        <button onClick={(props) => Filtro(cat._id)} className="btn-cat">{cat.name}</button>
+                    ))) : ('no hay cosas')}
+                    <span>Filtrar Categorias</span>
+                </div>
             </div>
-        </div>
-        <div className="home">
-            {notice !== null ? (notice.map(notices=>(
-            <div className="card"key={notices.id}> 
-                <p>{notices.date}</p>
-                    <div>
-                        <h5>{notices.title}</h5>
-                        <img src="https://pokeclubsite.files.wordpress.com/2016/07/pikachu-150x1501.png" alt="150" width="150" />
-                        <p>{notices.short_description}</p>
-                        <a href={notices.permalink}>Ver Ahora</a>
+            <div className="home">
+                {notice !== null ? (notice.map(notices => (
+                    <div className="card" key={notices.id}>
+                        <p>{notices.date}</p>
+                        <div>
+                            <h5>{notices.title}</h5>
+                            <img src="https://c1.wallpaperflare.com/preview/21/93/67/news-yellow-newspaper-3d.jpg" alt="150" width="150" />
+                            <p>{notices.short_description}</p>
+                            <a href={notices.permalink}>Ver Ahora</a>
+                        </div>
                     </div>
+                ))) : ('sin registros')}
+
             </div>
-            ))):('sin registros')}
-            
         </div>
-    </div>
     )
 }
 export default Home;

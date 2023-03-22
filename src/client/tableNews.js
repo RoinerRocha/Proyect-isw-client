@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from "react-router"
 import "./css/table.css";
-import { todoSource } from "./funciones/News";
+import jwtDecode from "jwt-decode";
+import { todasCategorias } from "./funcion";
 import Header from "./header";
 import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from "reactstrap";
 
@@ -11,6 +12,8 @@ import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, Mod
 
 function TableNews() {
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
+    const token = jwtDecode(usuario);
+
     useEffect(() => {
         if (!usuario) {
             window.location("/")
@@ -18,15 +21,34 @@ function TableNews() {
     }, []);
 
     const [sources, setSources] = useState(null)
+
+    const [categorias, setCategorias] = useState(null)
     useEffect(() => {
-        todoSource(setSources)
-    }, [])
+        todasCategorias(setCategorias)
+    }, []);
 
     const [editData, setEditData] = useState(null)
     const [formData, setFormData] = useState({
         name: '',
         category_id: ''
     })
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/newsource/${token.id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + usuario,
+                'Content-Type': 'application/json'
+            }
+        }).then(function (res) {
+            console.log(res.data, "hola")
+            console.log(token)
+            setSources(res.data);
+
+        }).catch(error => {
+            console.log("error: " + error);
+        });
+    }, []);
+
     useEffect(() => {
         if (editData !== null) {
             setFormData(editData)
@@ -114,13 +136,14 @@ function TableNews() {
         navigate("/newSources");
 
     }
+    let [idC, setIdC] = useState('');
     const navigate = useNavigate();
     return (
         <div className="tabla">
             {<Header />}
             <Container className="tablita">
                 <br />
-                <Button onClick={() => LogicaNew(navigate)} color="success">Insertar nueva noticia</Button>
+                <Button onClick={() => LogicaNew(navigate)} color="success">Insertar nueva fuente</Button>
                 <br /><br />
                 <Table>
                     <thead>
@@ -130,15 +153,17 @@ function TableNews() {
                     </thead>
                     <tbody>
                         {sources !== null ? (sources.map(sou => (
-                            <tr>
-                                <td>{sou.name}</td>
-                                <td>{sou.category_id}</td>
-                                <td>
-                                    <Button onClick={() => setEditData(sou)} color="primary">editar</Button>{"  "}
-                                    <Button onClick={() => deleteSource(sou._id)} color="danger">eliminar</Button>
-                                </td>
-                            </tr>
-                        ))) : ('no hay sources')}
+                            categorias !== null ? (categorias.map(cat => (
+                                <tr>
+                                    <td>{sou.name}</td>
+                                    <td >{cat.name}</td>
+                                    <td>
+                                        <Button onClick={() => setEditData(sou)} color="primary">editar</Button>{"  "}
+                                        <Button onClick={() => deleteSource(sou._id)} color="danger">eliminar</Button>
+                                    </td>
+                                </tr>
+                            ))): ('no hay fuentes')
+                        ))) : ('no hay fuentes')}
                     </tbody>
                 </Table>
                 <form className='m-3' onSubmit={handleSubmit} >

@@ -79,7 +79,7 @@ function NewSources() {
             {<Header />}
             <div className="cover2">
                 <h1>Agregar Fuentes</h1>
-                <input className="nombre" type="text" placeholder="Nombre de la noticia" onChange={ev => setName(ev.target.value)} required />
+                <input className="nombre" type="text" placeholder="Nombre de la Fuente" onChange={ev => setName(ev.target.value)} required />
                 <input className="contraseña" type="text" placeholder="URL" onChange={ev => setUrl(ev.target.value)} required />  
                 <select className="categoria"onChange={ev => setIdC(ev.target.value)}>
                 {categorias !== null ? (categorias.map(cat=>(
@@ -87,7 +87,7 @@ function NewSources() {
                 ))) : ('no hay cosas')}
                     
                 </select>
-                <div className="login-btn1" type="submit" value="Registrar Noticia" onClick={() => Registrar(name, url, idC)}>registrar Noticia</div>
+                <div className="login-btn1" type="submit" value="Registrar Noticia" onClick={() => Registrar(name, url, idC)}>registrar Fuente</div>
                 {/*<input type="submit" value="Registrar" onClick={() => Registrar(usuario, correo, contra, contra2)} />*/}
             </div>
         </div>
