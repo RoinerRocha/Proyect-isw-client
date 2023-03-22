@@ -14,8 +14,6 @@ function Register(){
             email: email,
             password: password,
             role: "user"
-            password: password,
-            role: "user"
             },{
                 headers: {
                 'Content-Type': 'application/json'

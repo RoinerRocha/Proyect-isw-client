@@ -14,12 +14,6 @@ function TableCategories() {
             window.location("/")
         }
     }, []);
-    let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
-    useEffect(() => {
-        if(!usuario){
-            window.location("/")
-        }
-    }, []);
     const [editData, setEditData] = useState(null)
     const [formData, setFormData] = useState({
         name: '',
@@ -37,7 +31,6 @@ function TableCategories() {
     const editCategory = (categorias) => {
         console.log(categorias._id);
         const isEdited = window.confirm(`Desea Editar esta categoria?${categorias._id}`)
-        const isEdited = window.confirm(`Desea Editar esta categoria?${categorias._id}`)
         if (isEdited) {
             axios.put(`http://localhost:5000/category/${categorias._id}`, {
                 _id: categorias._id,
@@ -53,7 +46,6 @@ function TableCategories() {
                 }
             }).catch(error => {
                 console.log("error: " + error);
-                alert("NO se pudo Editar");
                 alert("NO se pudo Editar");
             });
         }
@@ -80,7 +72,7 @@ function TableCategories() {
             })
           }
         } else {
-          alert("Por favor agrega categoria.")
+          alert("Por favor agrega la categoria.")
         }
       }
 

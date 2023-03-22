@@ -1,11 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from "react-router";
-import { todoSources } from "./funciones/CallsNewSources";
+import { useNavigate } from "react-router"
 import "./css/table.css";
+import { todoSource } from "./funciones/News";
 import Header from "./header";
 import { Table, Button, Container, Modal, ModalBody, ModalHeader, FormGroup, ModalFooter } from "reactstrap";
+
+
 
 function TableNews() {
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
@@ -15,10 +17,9 @@ function TableNews() {
         }
     }, []);
 
-
     const [sources, setSources] = useState(null)
     useEffect(() => {
-        todoSources(setSources)
+        todoSource(setSources)
     }, [])
 
     const [editData, setEditData] = useState(null)
@@ -26,8 +27,6 @@ function TableNews() {
         name: '',
         category_id: ''
     })
-
-
     useEffect(() => {
         if (editData !== null) {
             setFormData(editData)
@@ -82,14 +81,12 @@ function TableNews() {
                 setFormData({
                     name: '',
                     category_id: ''
-
                 })
             }
         } else {
-            alert("Por favor agrega los datos")
+            alert("Por favor agrega un equipo y pais.")
         }
     }
-
 
     const deleteSource = _id => {
         const isDelete = window.confirm(`Desea eliminar este Source?${_id}`)
@@ -132,23 +129,23 @@ function TableNews() {
                         <th>Acciones</th>
                     </thead>
                     <tbody>
-                        {sources !== null ? (sources.map(sour => (
+                        {sources !== null ? (sources.map(sou => (
                             <tr>
-                                <td>{sour.name}</td>
-                                <td>{sour.category_id}</td>
+                                <td>{sou.name}</td>
+                                <td>{sou.category_id}</td>
                                 <td>
-                                    <Button onClick={() => setEditData(sour)} color="primary">editar</Button>{"  "}
-                                    <Button onClick={() => deleteSource(sour._id)} color="danger">eliminar</Button>
+                                    <Button onClick={() => setEditData(sou)} color="primary">editar</Button>{"  "}
+                                    <Button onClick={() => deleteSource(sou._id)} color="danger">eliminar</Button>
                                 </td>
                             </tr>
-                        ))) : ("sources not found")}
+                        ))) : ('no hay sources')}
                     </tbody>
                 </Table>
-                <form className='m-3'onSubmit={handleSubmit} >
-                    <label htmlFor="name">Nombre fuente a editar:</label>
-                    <input placeholder="Ingrese el nuevo nombre" type="text" name="name" onChange={handleChange} value={formData.name}></input>
-                    <label htmlFor="name">Nombre Categoria a editar:</label>{}
-                    <input placeholder="Ingrese la nueva categoria" type="text" name="category_id" onChange={handleChange} value={formData.category_id}></input>
+                <form className='m-3' onSubmit={handleSubmit} >
+                    <label htmlFor="name">Titulo del Source a editar:</label>
+                    <input type="text" name="name" onChange={handleChange} value={formData.name}></input>
+                    <label htmlFor="name">Nombre Categoria a editar:</label>
+                    <input type="text" name="category_id" onChange={handleChange} value={formData.category_id}></input>
                     <input className='btn btn-success mx-1' type="submit" value="Enviar" />
                     <input className='btn btn-danger mx-1' type="reset" value="Cancelar" />
                 </form>

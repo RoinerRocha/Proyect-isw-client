@@ -3,21 +3,39 @@ import { useEffect, useState } from "react";
 import Header from "./header";
 import filter from "./filter";
 import { todasCategorias } from "./funcion";
+import { Noticias } from "./funciones/GetNews";
+import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router"
 import "./css/home.css";
 
 function Home() {
     let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
-    let [usuario, setusuario] = useState(JSON.parse(localStorage.getItem('Token')));
+    const token = jwtDecode(usuario);
+    let [notice, setNotice] = useState([]);
     const [categorias, setCategorias] = useState(null)
     useEffect(() => {
         todasCategorias(setCategorias)
     }, [])
 
+
+    const [news, setNews] = useState(null)
     useEffect(() => {
-        if(!usuario){
-            window.location("/")
-        }
+        Noticias(setNews)
+    }, [])
+
+    useEffect(() => {
+        axios.get(`http://localhost:5000/news/${token.id}`, {
+            headers: {
+                'Authorization': 'Bearer ' + usuario,
+                'Content-Type': 'application/json'
+            }
+        }).then(function (res) {
+            console.log(res.data)
+            setNotice(res.data);
+
+        }).catch(error => {
+            console.log("error: " + error);
+        });
     }, []);
 
 
@@ -49,17 +67,17 @@ function Home() {
             </div>
         </div>
         <div className="home">
-            <div className="card">
-                <h1>Teams</h1>
+            {notice !== null ? (notice.map(notices=>(
+            <div className="card"key={notices.id}> 
+                <p>{notices.date}</p>
                     <div>
-                        <h2>nombre de la noticia</h2>
+                        <h5>{notices.title}</h5>
                         <img src="https://pokeclubsite.files.wordpress.com/2016/07/pikachu-150x1501.png" alt="150" width="150" />
-                        <p>Fifa Code: codigo3</p>
-                        <p>Grupo:  grupo2</p>
-                        <p>Fifa Code: codigo3</p>
-                        <p>Grupo:  grupo2</p>
+                        <p>{notices.short_description}</p>
+                        <a href={notices.permalink}>Ver Ahora</a>
                     </div>
             </div>
+            ))):('sin registros')}
             
         </div>
     </div>
